@@ -72,6 +72,12 @@ class Logger:
     def log_break_end(self, block_id=None):
         self.log_event("break_end", block_id=block_id)
 
+    def log_baseline_start(self, block_id=None):
+        self.log_event("baseline_start", block_id=block_id)
+
+    def log_baseline_end(self, block_id=None):
+        self.log_event("baseline_end", block_id=block_id)
+
     def end_session(self):
         self.log_event("session_end")
         if self.file:

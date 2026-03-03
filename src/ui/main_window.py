@@ -114,14 +114,18 @@ class MainWindow(QMainWindow):
         if self.subject_id is None or self.session_id is None:
             self.session_label.setText("Status: Please enter subject and session information in the Logger Menu before starting the session.")
             return
-        elif self.event_counter >= 1:
+        elif self.event_counter == 1:
+            self.event_counter += 1
+            self.logger.log_baseline_end(block_id=self.event_counter - 1) # Log the baseline end event for the first baseline
+            self.play_track(self.session_tracks[self.current_track_index])
+        elif self.event_counter >= 2:
             self.event_counter += 1
             self.logger.log_break_end(block_id=self.event_counter - 1) # Log the break end event for the first break
             self.play_track(self.session_tracks[self.current_track_index])
         else:
             self.event_counter += 1
             self.logger.start_session(subject_id=self.subject_id, session_id=self.session_id)
-            self.play_track(self.session_tracks[self.current_track_index])
+            self.baseline() # Start with baseline recording before the first track
             self.start_button.setEnabled(False) # Disable the start button once the session starts
             self.logger_menu_button.setEnabled(False) # Disable the logger menu button once the session starts
             # self.next_button.setEnabled(True) # FOR TESTING PURPOSES
@@ -173,7 +177,8 @@ class MainWindow(QMainWindow):
         self.session_label.setText("Status: Playing")
 
     def session_break(self, track):
-        if self.event_counter >= 3:
+        self.event_counter += 1
+        if self.event_counter >= 6:
             self.session_label.setText("Status: Session Completed!")
             self.logger.end_session()
             return
@@ -196,7 +201,22 @@ class MainWindow(QMainWindow):
             self.start_preparation() # Start preparing the next session's tracks in the background
 
             # Wait for a two minutes before starting the next track list
-            QTimer.singleShot(15000, self.start_session)
+            QTimer.singleShot(120000, self.start_session)
+
+    def baseline(self):
+        # Log the baseline start event
+        self.logger.log_baseline_start(block_id=self.event_counter)
+
+        # Set up the progress bar and timer for baseline
+        self.progress_bar.setMaximum(300)
+        self.progress_bar.setValue(0)
+        self.timer.start(1000)
+
+        # Change session status to baseline
+        self.session_label.setText("Status: Baseline")
+
+        # BASELINE DURATION:
+        QTimer.singleShot(300000, self.start_session) # Wait for 5 minutes before starting the first track
         
     # Method to update the progress bar and session elapsed time every second
     def update_progress(self):

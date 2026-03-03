@@ -110,7 +110,7 @@ class Randomizer:
         self.addPlayedGenre(selected_genre)
 
         # Use previously made method to fetch a random track from the selected genre
-        for _ in range(2): # Add 16 tracks from the selected genre to the track list
+        for _ in range(16): # Add 16 tracks from the selected genre to the track list
             track = self.fetch_random_track(selected_genre)
             track_list.append(track)
 
