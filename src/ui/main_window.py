@@ -179,8 +179,7 @@ class MainWindow(QMainWindow):
     def session_break(self, track):
         self.event_counter += 1
         if self.event_counter >= 6:
-            self.session_label.setText("Status: Session Completed!")
-            self.logger.end_session()
+            self.recovery() # Start recovery after the last track of the session
             return
         else:
             # Stop the player
@@ -203,6 +202,20 @@ class MainWindow(QMainWindow):
             # Wait for a two minutes before starting the next track list
             QTimer.singleShot(120000, self.start_session)
 
+
+    def end_session(self):
+        # Stop the player
+        self.player.stop()
+
+        # Log the session end event
+        self.logger.end_session()
+
+        # Update UI to show session completion
+        self.session_label.setText("Status: Session Completed!")
+        self.track_label.setText("Current Track: None")
+        self.track_genre_label.setText("Current Genre: None")
+        self.progress_bar.setValue(0)
+
     def baseline(self):
         # Log the baseline start event
         self.logger.log_baseline_start(block_id=self.event_counter)
@@ -217,6 +230,21 @@ class MainWindow(QMainWindow):
 
         # BASELINE DURATION:
         QTimer.singleShot(300000, self.start_session) # Wait for 5 minutes before starting the first track
+
+    def recovery(self):
+        # Log the recovery start event
+        self.logger.log_recovery_start(block_id=self.event_counter)
+
+        # Set up the progress bar and timer for recovery
+        self.progress_bar.setMaximum(240)
+        self.progress_bar.setValue(0)
+        self.timer.start(1000)
+
+        # Change session status to recovery
+        self.session_label.setText("Status: Recovery")
+
+        # RECOVERY DURATION:
+        QTimer.singleShot(240000, self.end_session) # Wait for 4 minutes before ending the session
         
     # Method to update the progress bar and session elapsed time every second
     def update_progress(self):
