@@ -76,7 +76,7 @@ class Randomizer:
             raise ValueError(f"No tracks found for genre: {selected_genre}")
         
         # Try to find a valid track
-        max_attempts = 50
+        max_attempts = 200
         for _ in range(max_attempts):
             # Randomly select a track from the list of tracks for the selected genre
             selected = random.choice(tracks)
@@ -110,7 +110,7 @@ class Randomizer:
         self.addPlayedGenre(selected_genre)
 
         # Use previously made method to fetch a random track from the selected genre
-        for _ in range(16): # Add 16 tracks from the selected genre to the track list
+        for _ in range(10): # Add 10 tracks from the selected genre to the track list
             track = self.fetch_random_track(selected_genre)
             track_list.append(track)
 

@@ -78,6 +78,12 @@ class Logger:
     def log_baseline_end(self, block_id=None):
         self.log_event("baseline_end", block_id=block_id)
 
+    def log_recovery_start(self, block_id=None):
+        self.log_event("recovery_start", block_id=block_id)
+
+    def log_recovery_end(self, block_id=None):
+        self.log_event("recovery_end", block_id=block_id)
+
     def end_session(self):
         self.log_event("session_end")
         if self.file:

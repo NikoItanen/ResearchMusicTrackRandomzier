@@ -35,6 +35,16 @@ class Validator:
                 return False
             if high is not None and rmse_mean > high:
                 return False
+            
+        # Check spectral rolloff
+        spectral_rolloff_mean = track.get("spectral_rolloff_mean")
+        print(spectral_rolloff_mean)
+        if spectral_rolloff_mean is not None:
+            low, high = rule.get("spectral_rolloff_range", (None, None))
+            if low is not None and spectral_rolloff_mean < low:
+                return False
+            if high is not None and spectral_rolloff_mean > high:
+                return False
         
         print(f"Track '{track.get('name')}' passed validation for genre '{genre}'.")
         return True

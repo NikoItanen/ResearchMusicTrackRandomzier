@@ -21,10 +21,15 @@ def extract_features(file_path):
     rmse = librosa.feature.rms(y=y)
     rmse_mean = float(np.mean(rmse))
 
+    # Calculate spectral rolloff
+    spectral_rolloff = librosa.feature.spectral_rolloff(y=y, sr=sr)
+    spectral_rolloff_mean = float(np.mean(spectral_rolloff))
+
     return {
         "tempo": float(tempo),
         "centroid_mean": spectral_centroid_mean,
-        "rmse_mean": rmse_mean
+        "rmse_mean": rmse_mean,
+        "spectral_rolloff_mean": spectral_rolloff_mean
     }
 
 # Example usage

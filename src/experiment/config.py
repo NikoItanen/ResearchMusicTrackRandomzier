@@ -6,28 +6,33 @@ DEFAULT_BREAK_DURATION = 3 * 60 # Break duration of 3 minutes
 
 GENRE_RULES = {
     "Classical": {
-        "tempo_range": (110, 150),
-        "centroid_range": (1100, 2300),
-        "rmse_mean_range": (0.025, 0.12)
+        "tempo_range": (70, 110),
+        "centroid_range": (900, 2100),
+        "rmse_mean_range": (0.02, 0.10),
+        "spectral_rolloff_range": (2000, 4500)
     },
     "Jazz": {
-        "tempo_range": (100, 160),
-        "centroid_range": (1200, 2800),
-        "rmse_mean_range": (0.05, 0.18)
+        "tempo_range": (75, 170),
+        "centroid_range": (1200, 2600),
+        "rmse_mean_range": (0.04, 0.16),
+        "spectral_rolloff_range": (2800, 5200)
     },
     "Hip-Hop": {
-        "tempo_range": (75, 110),
-        "centroid_range": (1300, 3200),
-        "rmse_mean_range": (0.08, 0.28)
+        "tempo_range": (65, 110),
+        "centroid_range": (850, 2300),
+        "rmse_mean_range": (0.09, 0.22),
+        "spectral_rolloff_range": (2200, 4800)
     },
     "Electronic": { # Focusing on techno music
-        "tempo_range": (110, 160),
-        "centroid_range": (1300, 3800),
-        "rmse_mean_range": (0.25, 0.75)
+        "tempo_range": (120, 150),
+        "centroid_range": (2000, 4500),
+        "rmse_mean_range": (0.30, 0.80),
+        "spectral_rolloff_range": (4200, 8500)
     },
     "Experimental": { # Focusing on noise music
-        "tempo_range": (100, 200),
-        "centroid_range": (1200, 4000),
-        "rmse_mean_range": (0.20, 0.75)
+        "tempo_range": (70, 200),
+        "centroid_range": (2000, 4500),
+        "rmse_mean_range": (0.22, 0.65),
+        "spectral_rolloff_range": (5500, 11000)
     }
 }

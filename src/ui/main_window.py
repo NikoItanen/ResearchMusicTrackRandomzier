@@ -207,6 +207,9 @@ class MainWindow(QMainWindow):
         # Stop the player
         self.player.stop()
 
+        # Log the recovery end event
+        self.logger.log_recovery_end(block_id=self.event_counter)
+
         # Log the session end event
         self.logger.end_session()
 
